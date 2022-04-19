@@ -36,16 +36,16 @@ for (let i = 0; i<8; i++) {                 // make the rows
             cell.classList.add('black');
         }
 
-        function addImageByIndex(cell, type, j) {
-            if (j === 0 || j === 7){
+        function addImageByIndex(cell, type, index) {
+            if (index === 0 || index === 7){
                 addImage(cell, type , 'rook' );
-                } else if (j === 1 || j === 6){
+                } else if (index === 1 || index === 6){
                 addImage(cell, type , 'knight' );
-                } else if (j === 2 || j === 5) {
+                } else if (index === 2 || index === 5) {
                     addImage(cell, type , 'bishop' ); 
-                } else if (j === 3) {
+                } else if (index === 3) {
                     addImage(cell, type , 'king' ); 
-                } else if (j === 4) {
+                } else if (index === 4) {
                     addImage(cell, type , 'queen' ); 
                 } 
 
@@ -55,12 +55,9 @@ for (let i = 0; i<8; i++) {                 // make the rows
             addImageByIndex(cell, BLACkTYPE ,j);
         } else if (i === 1) {
             addImage(cell, BLACkTYPE , 'pawn' );
-        } // black peaces 
-        
-         if (i === 6) {
+        }  else if (i === 6) {
             addImage(cell, WHITETYPE, 'pawn');
-        } 
-        if ( i === 7){
+        } else if ( i === 7){
             addImageByIndex(cell, WHITETYPE ,j);
 
         }
