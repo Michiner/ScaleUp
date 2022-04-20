@@ -48,36 +48,28 @@ for (let i = 0; i < 8; i++) {                 // make the rows
             selectedCell.classList.add('selected'); 
         } 
         cell.onclick = OnCellClick;
+
+        pieces = getInitialBoard();
+
 } }       // עד פה יצירת הטבלה והלחיצה
+
+
+
+
         function addImage(cell, type, name) {  // make the peaces photos
             const image = document.createElement('img');
             image.src = 'Photos/' + type + '/' + name + '.png';
             cell.appendChild(image);
             
         }
-        pieces = getInitialBoard();
         
         
         function getInitialBoard() {
             let result = [];
-            result.push(new Piece(0, 0, "rook", WHITETYPE));
-            result.push(new Piece(0, 1, "knight", WHITETYPE));
-            result.push(new Piece(0, 2, "BISHOP", WHITETYPE));
-            result.push(new Piece(0, 3, "KING", WHITETYPE));
-            result.push(new Piece(0, 4, "QUEEN", WHITETYPE));
-            result.push(new Piece(0, 5, "BISHOP", WHITETYPE));
-            result.push(new Piece(0, 6, "KNIGHT", WHITETYPE));
-            result.push(new Piece(0, 7, "ROOK", WHITETYPE));
+            addPieces(result, 0, WHITETYPE);
 
+            addPieces(result, 7, BLACkTYPE);
 
-            result.push(new Piece(7, 0, "rook", BLACkTYPE));
-            result.push(new Piece(7, 1, "knight", BLACkTYPE));
-            result.push(new Piece(7, 2, "BISHOP", BLACkTYPE));
-            result.push(new Piece(7, 3, "KING", BLACkTYPE));
-            result.push(new Piece(7, 4, "QUEEN", BLACkTYPE));
-            result.push(new Piece(7, 5, "BISHOP", BLACkTYPE));
-            result.push(new Piece(7, 6, "KNIGHT", BLACkTYPE));
-            result.push(new Piece(7, 7, "ROOK", BLACkTYPE));
 
             for (let i = 0; i < 8; i++){
                 result.push(new Piece(1, i, "pawn", WHITETYPE));
@@ -93,8 +85,19 @@ for (let i = 0; i < 8; i++) {                 // make the rows
     
     for (let piece of pieces) {
         addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);  
-    console.log( 'pieces', pieces);
+
     }
     
     
     
+function addPieces(result, row, player) {
+    result.push(new Piece(row, 0, "rook", player));
+    result.push(new Piece(row, 1, "knight", player));
+    result.push(new Piece(row, 2, "BISHOP", player));
+    result.push(new Piece(row, 3, "KING", player));
+    result.push(new Piece(row, 4, "QUEEN", player));
+    result.push(new Piece(row, 5, "BISHOP", player));
+    result.push(new Piece(row, 6, "KNIGHT", player));
+    result.push(new Piece(row, 7, "ROOK", player));
+}
+
