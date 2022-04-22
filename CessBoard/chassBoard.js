@@ -9,6 +9,14 @@ const BLACkTYPE = 'black';
 let row;
 let selectedCell;
 let pieces = [];
+let table;
+
+const PAWN = 'pawn';
+const ROOK = 'rook';
+const KNIGHT = 'knight';
+const BISHOP = 'bishop';
+const KING = 'king';
+const QUEEN = 'queen';
 
 
 
@@ -19,8 +27,69 @@ class Piece {
         this.type = type;
         this.player = player;
     }
+
+
+
+    getPossibleMoves() {
+        // Get relative moves
+        let relativeMoves;
+        if (this.type === PAWN) {
+          relativeMoves = this.getPawnRelativeMoves();
+        } else if (this.type === ROOK) {
+          relativeMoves = this.getRookRelativeMoves();
+        } else if (this.type === KNIGHT) {
+          // TODO: Get moves
+        } else if (this.type === BISHOP) {
+          // TODO: Get moves
+        } else if (this.type === KING) {
+          // TODO: Get moves
+        } else if (this.type === QUEEN) {
+          // TODO: Get moves
+        } else {
+          console.log("Unknown type", type)
+        }
+        console.log('relativeMoves', relativeMoves);
+    
+        // Get absolute moves
+        let absoluteMoves = [];
+        for (let relativeMove of relativeMoves) {
+          const absoluteRow = this.row + relativeMove[0];
+          const absoluteCol = this.col + relativeMove[1];
+          absoluteMoves.push([absoluteRow, absoluteCol]);
+        }
+        // console.log('absoluteMoves', absoluteMoves);
+    
+        // Get filtered absolute moves
+        let filteredMoves = [];
+        for (let absoluteMove of absoluteMoves) {
+          const absoluteRow = absoluteMove[0];
+          const absoluteCol = absoluteMove[1];
+          if (absoluteRow >= 0 && absoluteRow <= 7 && absoluteCol >= 0 && absoluteCol <= 7) {
+            filteredMoves.push(absoluteMove);
+          }
+        }
+        console.log('filteredMoves', filteredMoves);
+        return filteredMoves;
+      }
+    getPawnRelativeMoves(){
+        return[[1,0]];
+
+    }
+    getRookRelativeMoves() {
+        let result = [];
+        for (let i = 1; i < 8; i++) {
+          result.push([i, 0]);
+          result.push([-i, 0]);
+          result.push([0, i]);
+          result.push([0, -i]);
+        }
+        return result;
+      }
+
+
+    
 }
-const table = document.createElement('table');  // make the table
+table = document.createElement('table');  // make the table
 document.body.append(table);
 table.classList.add('table');
 
@@ -39,6 +108,9 @@ for (let i = 0; i < 8; i++) {                 // make the rows
         } else {
             cell.classList.add('black');
         }
+
+
+        
         function OnCellClick(event) { 
             console.log(event.currentTarget);
             if (selectedCell !== undefined){
@@ -66,18 +138,14 @@ for (let i = 0; i < 8; i++) {                 // make the rows
         
         function getInitialBoard() {
             let result = [];
-            addPieces(result, 0, WHITETYPE);
-
-            addPieces(result, 7, BLACkTYPE);
-
+            addFirstRowPieces(result, 0, WHITETYPE);
+            addFirstRowPieces(result, 7, BLACkTYPE);
 
             for (let i = 0; i < 8; i++){
-                result.push(new Piece(1, i, "pawn", WHITETYPE));
-                result.push(new Piece(6, i, "pawn", BLACkTYPE));
+                result.push(new Piece(1, i, PAWN, WHITETYPE));
+                result.push(new Piece(6, i, PAWN, BLACkTYPE));
 
             }
-
-
             return result;
         }
     
@@ -90,14 +158,14 @@ for (let i = 0; i < 8; i++) {                 // make the rows
     
     
     
-function addPieces(result, row, player) {
-    result.push(new Piece(row, 0, "rook", player));
-    result.push(new Piece(row, 1, "knight", player));
-    result.push(new Piece(row, 2, "BISHOP", player));
-    result.push(new Piece(row, 3, "KING", player));
-    result.push(new Piece(row, 4, "QUEEN", player));
-    result.push(new Piece(row, 5, "BISHOP", player));
-    result.push(new Piece(row, 6, "KNIGHT", player));
-    result.push(new Piece(row, 7, "ROOK", player));
+function addFirstRowPieces(result, row, player) {
+    result.push(new Piece(row, 0, ROOK, player));
+    result.push(new Piece(row, 1, KNIGHT, player));
+    result.push(new Piece(row, 2, BISHOP, player));
+    result.push(new Piece(row, 3, KING, player));
+    result.push(new Piece(row, 4, QUEEN, player));
+    result.push(new Piece(row, 5, BISHOP, player));
+    result.push(new Piece(row, 6, KNIGHT, player));
+    result.push(new Piece(row, 7, ROOK, player));
 }
 
