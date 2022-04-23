@@ -35,12 +35,17 @@ tr{
 td{
     width: 70px;
 }
+td:hover {
+    background: lightgreen;
+    cursor: pointer
+  }
 
 .selected{
-    background-color: rgb(39, 39, 214);
+    background-color: rgb(190, 242, 60);
 }
 
 .possible-move{
-    background-color: rgb(39, 39, 214);
-
+    background-color: rgba(177, 175, 47, 0.556);
+    border-radius: 10px;
+    
 }
